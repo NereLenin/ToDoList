@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local ="clr-namespace:mvvm_test"
+             x:Class="mvvm_test.MainPage">
+
+    <ContentPage.BindingContext>
+        <local:ItemViewModel/>
+    </ContentPage.BindingContext>
+    <StackLayout>
+        
+        <StackLayout>
+        <Frame BackgroundColor="#CD853F">
+            <Label Text="My ToDo List" FontSize="Subtitle" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"/>
+        </Frame>
+    </StackLayout>
+    
+        <StackLayout Orientation="Horizontal">
+            <Entry x:Name="InputTask" Text="{Binding TextOfNewItem}" Placeholder="Введите задачу" TextColor="Black" ReturnCommand="{Binding AddNewToDoCommand}"  HorizontalOptions="FillAndExpand"/>
+            <Button Text="+" FontSize="Large" Command="{Binding AddNewToDoCommand}"/>
+        </StackLayout>
+    
+    <StackLayout>
+            <ListView x:Name="ToDoList" ItemsSource="{Binding Items}" Margin="5" BackgroundColor="Transparent">
+
+                <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame BorderColor="Gray" CornerRadius="5" HasShadow="True" Padding="5" BackgroundColor="Transparent">
+                                <StackLayout Orientation="Horizontal">
+                                    <CheckBox Color="#CD853F"/>
+                                    <Label Text="{Binding Text}" FontSize="Subtitle" FontFamily="Comic Sans MS" TextColor="Black" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
+                                    <Button Text="-" FontSize="Subtitle" HorizontalOptions="End" Command="{Binding Path=BindingContext.RemoveToDoCommand, Source={x:Reference ToDoList}}" CommandParameter="{Binding .}"/>
+                                </StackLayout>
+                            </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+        
+
+    </StackLayout>
+        
+</StackLayout>
+</ContentPage>
